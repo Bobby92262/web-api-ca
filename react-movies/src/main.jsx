@@ -15,6 +15,12 @@ import TrendingMoviesPage from "./pages/trendingMoviesPage";
 import WatchedMoviesPage from "./pages/watchedMoviesPage";
 import TopRatedMoviesPage from "./pages/topRatedPage";
 import SimilarMoviesPage from "./pages/similarMoviesPage";
+import LoginPage from "./pages/loginPage";
+import SignupPage from "./pages/signupPage";
+import StartPage from "./pages/startPage";
+import ProfilePage from "./pages/profilePage";
+import AuthContextProvider from "./contexts/authContext";
+import ProtectedRoutes from "./protectedRoutes";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
 import { Box } from "@mui/material";
@@ -29,30 +35,46 @@ const queryClient = new QueryClient({
   },
 });
 
+// eslint-disable-next-line react-refresh/only-export-components
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
-        <Box sx={{ height: "100vh", overflow: "hidden", display: "flex", flexDirection: "column" }}>
-          <BrowserRouter>
+        <BrowserRouter>
+        <AuthContextProvider>
+          <MoviesContextProvider>
+            <Box sx={{ height: "100vh", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+          
             <SiteHeader />
-            <MoviesContextProvider>
+            
               <Routes>
-                <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
+                
                 <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
                 <Route path="/movies/:id" element={<MoviePage />} />
                 <Route path="/" element={<HomePage />} />
                 <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
                 <Route path="/movies/upcoming" element={<UpcomingMoviesPage/> } />
                 <Route path="/movies/trending" element={<TrendingMoviesPage/>} />
-                <Route path="/movies/watched" element={<WatchedMoviesPage/>} />
                 <Route path="/movies/top_rated" element={<TopRatedMoviesPage/>} />
                 <Route path="/movies/:id/similar" element={<SimilarMoviesPage/>} />
+                <Route path="/login" element={< LoginPage />} />
+                <Route path="/signup" element={< SignupPage />} />    
+                
+                
+                <Route element={<ProtectedRoutes />}>
+                  <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
+                  <Route path="/movies/watched" element={<WatchedMoviesPage/>} />
+                  <Route path="/profile" element={< ProfilePage />} />
+                </Route>
+
+                
                 <Route path="*" element={ <Navigate to="/" /> } />
               </Routes>
+              </Box>
             </MoviesContextProvider>
+            </AuthContextProvider>
           </BrowserRouter>
-        </Box>
+        
         <ReactQueryDevtools initialIsOpen={false} />
       </ThemeProvider>
     </QueryClientProvider>
@@ -62,5 +84,3 @@ const App = () => {
 
 const rootElement = createRoot( document.getElementById("root") )
 rootElement.render(<App />);
-
-//Update

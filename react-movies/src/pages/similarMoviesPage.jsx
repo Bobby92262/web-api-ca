@@ -32,6 +32,7 @@ const { id } = useParams();
   // Redundant, but necessary to avoid app crashing.
   const favorites = movies.filter(m => m.favorite)
   localStorage.setItem('favorites', JSON.stringify(favorites))
+  // eslint-disable-next-line no-unused-vars
   const addToFavorites = (movieId) => true
 
   return (
