@@ -4,6 +4,7 @@ import './db';
 import cors from 'cors';
 //... other imports
 import usersRouter from './api/users';
+import moviesRouter from './api/movies';
 import authenticate from './authenticate';
 
 
@@ -32,6 +33,9 @@ app.use(errHandler);
 
 //Users router
 app.use('/api/users', usersRouter);
+
+//Movies Router
+app.use('/api/movies',moviesRouter);
 
 app.listen(port, () => {
   console.info(`Server running at ${port}`);
