@@ -10,7 +10,7 @@ const menuOptions = [
     { label: "Trending Movies", path: "/movies/trending" },
     { label: "Watched Movies", path: "/movies/watched" },
     { label: "Top Rated Movies", path: "/movies/top_rated" },
-    { label: "Login", path: "/" }
+    { label: "Login", path: "login" }
 ];
 
 const SideBarMenu = () => {

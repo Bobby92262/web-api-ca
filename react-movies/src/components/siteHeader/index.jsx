@@ -11,6 +11,9 @@ import { useNavigate } from "react-router";
 import { styled } from '@mui/material/styles';
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/authContext";
+import { Box } from "@mui/material";
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
@@ -20,18 +23,28 @@ const SiteHeader = () => {
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  
+  const { isAuthenticated, userName, signout } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const menuOptions = [
+  const menuOptions = isAuthenticated 
+  ? [
     { label: "Home", path: "/" },
     { label: "Favorites", path: "/movies/favorites" },
     { label: "Upcoming", path: "/movies/upcoming" },
     { label: "Trending Movies", path: "/movies/trending" },
     { label: "Watched Movies", path: "/movies/watched" },
     { label: "Top Rated Movies", path: "/movies/top_rated" },
-    { label: "Login", path: "/login"}
-  ];
+    { label: "Profile", path: "/profile"},
+    ]
+  : [
+    { label: "Home", path: "/"},
+    { label: "Upcoming", path: "/movies/upcoming" },
+    { label: "Trending Movies", path: "/movies/trending" },
+    { label: "Watched Movies", path: "/movies/watched" },
+    { label: "Top Rated Movies", path: "/movies/top_rated" },
+    ];
+    
+  
 
   const handleMenuSelect = (pageURL) => {
     setAnchorEl(null);
@@ -42,16 +55,21 @@ const SiteHeader = () => {
     setAnchorEl(event.currentTarget);
   };
 
+
+
   return (
     <>
       <AppBar position="fixed" sx={{ background: "linear-gradient(90deg, #ff6f00 0%, #ff5722 100%)",}}>
-        <Toolbar>
-          <Typography variant="h4" sx={{ flexGrow: 1 }}>
-            TMDB Client
-          </Typography>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            All you ever wanted to know about Movies!
-          </Typography>
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <Box sx={{ display: "flex", flexDirection: "column", flexGrow: 1}}>
+            <Typography variant="h4">
+              TMDB Client
+            </Typography>
+            <Typography variant="h6">
+              All you ever wanted to know about Movies!
+            </Typography>
+          </Box>
+
             {isMobile ? (
               <>
                 <IconButton
@@ -101,6 +119,36 @@ const SiteHeader = () => {
                 ))}
               </>
             )}
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              {isAuthenticated ? (
+                <>
+                  <Typography sx={{ 
+                      backgroundColor: "#1f2a44",
+                      color: "#ffffffff",
+                      paddingX: 1,
+                      paddingY: 0.5,
+                      borderRadius: 1,
+                      fontWeight: "bold",
+                      marginRight: 1
+                    }}>
+                    Welcome {userName}
+                  </Typography>
+
+                  <Button color="inherit" onClick={signout}>
+                    Sign out
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button color="inherit" onClick={() => navigate("/login")}>
+                    Login2
+                  </Button>
+                  <Button color="inherit" onClick={() => navigate("/signup")}>
+                    Signup2
+                  </Button>
+                </>
+              )}
+            </Box>
         </Toolbar>
       </AppBar>
       <Offset />

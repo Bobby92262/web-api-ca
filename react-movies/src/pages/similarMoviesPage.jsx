@@ -44,7 +44,6 @@ const { id } = useParams();
       ]}
     />
   );
-
 };
 
 export default SimilarMoviesPage;
