@@ -33,8 +33,6 @@ app.use(errHandler);
 //Users router
 app.use('/api/users', usersRouter);
 
-
-
 app.listen(port, () => {
   console.info(`Server running at ${port}`);
 });
