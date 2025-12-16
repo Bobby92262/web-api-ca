@@ -6,6 +6,7 @@ import cors from 'cors';
 import usersRouter from './api/users';
 import moviesRouter from './api/movies';
 import authenticate from './authenticate';
+import favouritesRouter from "./api/favourites/index";
 
 
 
@@ -36,6 +37,9 @@ app.use('/api/users', usersRouter);
 
 //Movies Router
 app.use('/api/movies',moviesRouter);
+
+//Favourites Router
+app.use("/api/favourites", authenticate, favouritesRouter);
 
 app.listen(port, () => {
   console.info(`Server running at ${port}`);

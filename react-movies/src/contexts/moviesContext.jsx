@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createContext } from "react";
-import { fetchUserFavourites, saveFavouriteMovie, deleteFavouriteMovie } from "../../../movies-api/api/favourites";
+import { fetchUserFavourites, saveFavouriteMovie, deleteFavouriteMovie } from "../api/Helper-index";
 import { useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
 
 export const MoviesContext = createContext(null);
@@ -24,10 +24,10 @@ const MoviesContextProvider = (props) => {
     onSuccess: () => queryClient.invalidateQueries(["favouriteMovies"])
   });
 
-  const addToFavorites = (movie) =>
+  const addToFavourites = (movie) =>
     addFavouriteMutation.mutate(movie.id);
 
-  const removeFromFavorites = (movie) =>
+  const removeFromFavourites = (movie) =>
     removeFavouriteMutation.mutate(movie.id);
 
   //Removed favourite prop
@@ -69,9 +69,9 @@ const MoviesContextProvider = (props) => {
     <MoviesContext.Provider
       value={{
         //Backend favourites
-        favorites: favouriteMovieIds,
-        addToFavorites,
-        removeFromFavorites,
+        favourites: favouriteMovieIds,
+        addToFavourites,
+        removeFromFavourites,
         //Still local
         addReview,
         watchlist,

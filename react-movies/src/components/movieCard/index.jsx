@@ -17,29 +17,18 @@ import { MoviesContext } from "../../contexts/moviesContext";
 import dayjs from "dayjs";
 
 export default function MovieCard({movie, action}) {
-  const { favorites, addToFavorites } = useContext(MoviesContext);
+  const { favourites } = useContext(MoviesContext);
 
-  if (favorites.find((id) => id === movie.id)) {
-    movie.favorite = true;
-  } else {
-    movie.favorite = false
-  }
-
-  //To be removed ??
-  const handleAddToFavorite = (e) => {
-    e.preventDefault();
-    addToFavorites(movie);
-  };
+  const isFavourite = favourites.includes(movie.id);
 
   //Date formatting
   const date = dayjs(movie.release_date).format('D MMM YY');
-
 
   return (
     <Card>
       <CardHeader
         avatar={
-          movie.favorite ? (
+          isFavourite ? (
             <Avatar sx={{ backgroundColor: 'red' }}>
               <FavoriteIcon />
             </Avatar>
