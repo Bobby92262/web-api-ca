@@ -58,10 +58,12 @@ const App = () => {
                 <Route path="/movies/top_rated" element={<TopRatedMoviesPage/>} />
                 <Route path="/movies/:id/similar" element={<SimilarMoviesPage/>} />
                 <Route path="/login" element={< LoginPage />} />
-                <Route path="/signup" element={< SignupPage />} />    
+                <Route path="/signup" element={< SignupPage />} />
+                <Route path="/profile" element={< ProfilePage />} />  
                 
                 
                 <Route element={<ProtectedRoutes />}>
+                  <Route path="/start" element={< StartPage />} />
                   <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
                   <Route path="/movies/watched" element={<WatchedMoviesPage/>} />
                   <Route path="/profile" element={< ProfilePage />} />

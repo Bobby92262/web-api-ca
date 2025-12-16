@@ -40,7 +40,6 @@ const SiteHeader = () => {
     { label: "Home", path: "/"},
     { label: "Upcoming", path: "/movies/upcoming" },
     { label: "Trending Movies", path: "/movies/trending" },
-    { label: "Watched Movies", path: "/movies/watched" },
     { label: "Top Rated Movies", path: "/movies/top_rated" },
     ];
     
@@ -141,10 +140,10 @@ const SiteHeader = () => {
               ) : (
                 <>
                   <Button color="inherit" onClick={() => navigate("/login")}>
-                    Login2
+                    Login
                   </Button>
                   <Button color="inherit" onClick={() => navigate("/signup")}>
-                    Signup2
+                    Signup
                   </Button>
                 </>
               )}
