@@ -1,24 +1,41 @@
 import React, { useState } from "react";
+import { createContext } from "react";
+import { fetchUserFavourites, saveFavouriteMovie, deleteFavouriteMovie } from "../../../movies-api/api/favourites";
+import { useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
 
-export const MoviesContext = React.createContext(null);
+export const MoviesContext = createContext(null);
 
 const MoviesContextProvider = (props) => {
-const [favorites, setFavorites] = useState( [] )
-const [myReviews, setMyReviews] = useState( {} ) 
-const [watchlist, setWatchList] = useState( [] )
-const [watched, setWatched] = useState([])
+  const queryClient = useQueryClient();
 
+  // Backend Favourites
+  const{ data: favouriteMovieIds = [] } = useQuery({
+    queryKey: ["favouriteMovies"],
+    queryFn: fetchUserFavourites
+  });
 
-  const addToFavorites = (movie) => {
-    let newFavorites = [];
-    if (!favorites.includes(movie.id)){
-      newFavorites = [...favorites, movie.id];
-    }
-    else{
-      newFavorites = [...favorites];
-    }
-    setFavorites(newFavorites)
-  };
+  const addFavouriteMutation = useMutation({
+    mutationFn: saveFavouriteMovie,
+    onSuccess: () => queryClient.invalidateQueries(["favouriteMovies"])
+  });
+
+  const removeFavouriteMutation = useMutation({
+    mutationFn: deleteFavouriteMovie,
+    onSuccess: () => queryClient.invalidateQueries(["favouriteMovies"])
+  });
+
+  const addToFavorites = (movie) =>
+    addFavouriteMutation.mutate(movie.id);
+
+  const removeFromFavorites = (movie) =>
+    removeFavouriteMutation.mutate(movie.id);
+
+  //Removed favourite prop
+
+  const [myReviews, setMyReviews] = useState( {} );
+  const [watchlist, setWatchList] = useState( [] );
+  const [watched, setWatched] = useState([]);
+
 
   const addToWatchList = (movie) => {
     if (!watchlist.some((m) => m.id === movie.id)){
@@ -34,22 +51,14 @@ const [watched, setWatched] = useState([])
     if (!watched.includes(movie.id)) {
       setWatched([...watched, movie.id]);
     }
-  }
-  
-  
-  const removeFromFavorites = (movie) => {
-    setFavorites( favorites.filter(
-      (mId) => mId !== movie.id
-    ) )
   };
 
-   
   const removeFromWatchlist = (movie) => {
     setWatchList((prev) => prev.filter((id) => id !== movie.id));
     setWatched((previous) => previous.filter((id) => id !== movie.id));
   };
 
-
+  
   const addReview = (movie, review) => {
     setMyReviews( {...myReviews, [movie.id]: review } )
   };
@@ -59,9 +68,11 @@ const [watched, setWatched] = useState([])
   return (
     <MoviesContext.Provider
       value={{
-        favorites,
+        //Backend favourites
+        favorites: favouriteMovieIds,
         addToFavorites,
         removeFromFavorites,
+        //Still local
         addReview,
         watchlist,
         addToWatchList,
