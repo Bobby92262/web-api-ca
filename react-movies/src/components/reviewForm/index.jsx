@@ -118,8 +118,13 @@ const ReviewForm = ({ movie }) => {
   };
 
   return (
-    <Box component="div" sx={styles.root}>
-      <Typography component="h2" variant="h3">
+    <Box component="div" sx={{
+      ...styles.root,
+      backgroundColor: "background.default",
+      minHeight: "100vh",
+      padding: 3,
+    }}>
+      <Typography component="h2" variant="h3" color="secondary">
         Write a review
       </Typography>
 
@@ -158,6 +163,7 @@ const ReviewForm = ({ movie }) => {
               label="Author's name"
               name="author"
               autoFocus
+              
             />
           )}
         />

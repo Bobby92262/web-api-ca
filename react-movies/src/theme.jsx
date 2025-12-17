@@ -20,15 +20,17 @@ const theme = createTheme({
             secondary: "#b0bec5",
         },
     },
+
     typography: {
-    h4: {
-      fontWeight: 600,
-      color: "#ffffff",  
+        h4: {
+        fontWeight: 600,
+        color: "#ffffff",  
+        },
+        button: {
+            textTransform: "none",
+        },
     },
-    button: {
-        textTransform: "none",
-    },
-},
+
 });
 
 export default theme
