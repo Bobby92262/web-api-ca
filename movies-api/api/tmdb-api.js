@@ -66,7 +66,7 @@ export const getMovieImages = async (id) => {
 };
 
 // Movie Credits
-export const getMoviesCredits = async (id) => {
+export const getMovieCredits = async (id) => {
     const response = await fetch(
         `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${process.env.TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=1`
     );
@@ -94,7 +94,7 @@ export const getSimilarMovies = async (id) => {
 // Trending movies (week)
 export const getTrendingMovies = async () => {
     const response = await fetch(
-        `https://api.themoviedb.org/3/trending/week?api_key=${process.env.TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=1`
+        `https://api.themoviedb.org/3/trending/movie/week?api_key=${process.env.TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=1`
     );
 
     if (!response.ok) {

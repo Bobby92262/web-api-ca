@@ -1,5 +1,4 @@
 // Discover movies now runs off our api
-//This is a test commit - remove message later
 export const getMovies = () => {
   return fetch(
     `http://localhost:8080/api/movies/discover`
@@ -23,7 +22,7 @@ export const getMovie = (args) => {
   const [, idPart] = args.queryKey;
   const { id } = idPart;
   return fetch(
-    `https://api.themoviedb.org/3/movie/${id}?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    `http://localhost:8080/api/movies/${id}`
   ).then((response) => {
     if (!response.ok) {
       return response.json().then((error) => {
@@ -40,9 +39,7 @@ export const getMovie = (args) => {
 // Get a list of movie genres
   export const getGenres = () => {
     return fetch(
-      "https://api.themoviedb.org/3/genre/movie/list?api_key=" +
-        import.meta.env.VITE_TMDB_KEY +
-        "&language=en-US"
+      'http://localhost:8080/api/movies/genres/list'
     ).then( (response) => {
       if (!response.ok) {
         return response.json().then((error) => {
@@ -61,7 +58,7 @@ export const getMovie = (args) => {
     const [, idPart] = queryKey;
     const { id } = idPart;
     return fetch(
-      `https://api.themoviedb.org/3/movie/${id}/images?api_key=${import.meta.env.VITE_TMDB_KEY}`
+      `http://localhost:8080/api/movies/${id}/images`
     ).then( (response) => {
       if (!response.ok) {
         return response.json().then((error) => {
@@ -79,7 +76,7 @@ export const getMovie = (args) => {
     const [, idPart] = queryKey;
     const { id } = idPart;
     return fetch(
-      `https://api.themoviedb.org/3/person/${id}/images?api_key=${import.meta.env.VITE_TMDB_KEY}`
+      `http://localhost:8080/api/movies/person/${id}/images`
     ).then( (response) => {
       if (!response.ok) {
         return response.json().then((error) => {
@@ -93,6 +90,7 @@ export const getMovie = (args) => {
    });
   };
 
+  // Come back to this, need to implement bakcend
   export const getMovieReviews = ({ queryKey }) => {
     const [, idPart] = queryKey;
     const { id } = idPart;
@@ -116,7 +114,7 @@ export const getMovie = (args) => {
     const [, idPart] = queryKey;
     const { id } = idPart;
     return fetch(
-      `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${import.meta.env.VITE_TMDB_KEY}`
+      `http://localhost:8080/api/movies/${id}/similar`
     ).then( (response) => {
       if (!response.ok) {
         return response.json().then((error) => {
@@ -130,9 +128,9 @@ export const getMovie = (args) => {
    });
   };
 
-  export const getUpcoming = (queryKey) => {
+  export const getUpcoming = () => {
   return fetch(
-    `https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    `http://localhost:8080/api/movies/upcoming/list`
   ).then((response) => {
     if (!response.ok) {
       return response.json().then((error) => {
@@ -148,9 +146,7 @@ export const getMovie = (args) => {
 
 export const getTrendingMovies = () => {
     return fetch(
-      "https://api.themoviedb.org/3/trending/movie/week?api_key=" +
-        import.meta.env.VITE_TMDB_KEY +
-        "&language=en-US"
+      `http://localhost:8080/api/movies/trending/week`
     ).then( (response) => {
       if (!response.ok) {
         return response.json().then((error) => {
@@ -167,9 +163,7 @@ export const getTrendingMovies = () => {
   // Get top-rated movies
   export const getTopRatedMovies = () => {
     return fetch(
-      "https://api.themoviedb.org/3/movie/top_rated?api_key=" +
-        import.meta.env.VITE_TMDB_KEY +
-        "&language=en-US"
+      `http://localhost:8080/api/movies/toprated/list`
     ).then( (response) => {
       if (!response.ok) {
         return response.json().then((error) => {
@@ -188,9 +182,7 @@ export const getTrendingMovies = () => {
     const [, idPart] = queryKey;
     const { id } = idPart;
     return fetch(
-      `https://api.themoviedb.org/3/movie/${id}/credits?api_key=` +
-        import.meta.env.VITE_TMDB_KEY +
-        "&language=en-US"
+      `http://localhost:8080/api/movies/${id}/credits`
     ).then( (response) => {
       if (!response.ok) {
         return response.json().then((error) => {
@@ -209,9 +201,7 @@ export const getTrendingMovies = () => {
     const [, idPart] = queryKey;
     const { id } = idPart;
     return fetch(
-      `https://api.themoviedb.org/3/person/${id}?api_key=` +
-        import.meta.env.VITE_TMDB_KEY +
-        "&language=en-US"
+      `http://localhost:8080/api/movies/person/${id}`
     ).then( (response) => {
       if (!response.ok) {
         return response.json().then((error) => {

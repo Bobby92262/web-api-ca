@@ -6,7 +6,7 @@ import {
     getUpcomingMovies,
     getGenres,
     getMovieImages,
-    getMoviesCredits,
+    getMovieCredits,
     getSimilarMovies,
     getTrendingMovies,
     getTopRatedMovies,
@@ -51,7 +51,7 @@ router.get('/:id/images', asyncHandler(async (req, res) => {
 
 // Credits
 router.get('/:id/credits', asyncHandler(async (req, res) => {
-    const credits = await getMoviesCredits(req.params.id);
+    const credits = await getMovieCredits(req.params.id);
     res.status(200).json(credits);
 }));
 
