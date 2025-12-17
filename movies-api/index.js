@@ -43,7 +43,7 @@ app.use('/api/movies',moviesRouter);
 app.use("/api/favourites", authenticate, favouritesRouter);
 
 //Reviews Router
-app.use("api/reviews", reviewRouter);
+app.use("/api/reviews", reviewRouter);
 
 app.listen(port, () => {
   console.info(`Server running at ${port}`);

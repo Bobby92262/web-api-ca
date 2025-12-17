@@ -9,6 +9,8 @@ import { MoviesContext } from "../../contexts/moviesContext";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { useNavigate } from "react-router";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { postReview } from "../../api/Helper-index";
 
 
 const ratings = [
@@ -61,11 +63,24 @@ const styles = {
   },
 };
 
+
 const ReviewForm = ({ movie }) => {
-  const context = useContext(MoviesContext);
+  //Legacy : const context = useContext(MoviesContext);
+  
   const [rating, setRating] = useState(3);
   const [open, setOpen] = useState(false); 
   const navigate = useNavigate();
+
+  const queryClient = useQueryClient();
+
+  const reviewMutation = useMutation({
+    mutationFn: ({ movieId, content, rating }) =>
+      postReview(movieId, content, rating),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["reviews", { movieId: movie.id }]);
+      setOpen(true);
+    }
+  })
 
   
   const defaultValues = {
@@ -93,11 +108,13 @@ const ReviewForm = ({ movie }) => {
 
 
   const onSubmit = (review) => {
+    /* Legacy Implementation
     review.movieId = movie.id;
     review.rating = rating;
     console.log(review);
     context.addReview(movie, review);
-    setOpen(true);
+    */
+    reviewMutation.mutate({ movieId: movie.id, content: review.review, rating });
   };
 
   return (

@@ -7,18 +7,27 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Link } from "react-router";
-import { getMovieReviews } from "../../api/tmdb-api";
+// Legacy import { getMovieReviews } from "../../api/tmdb-api";
 import { excerpt } from "../../util";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from '../spinner'
+import { getReviewsByMovie } from "../../api/Helper-index";
 
 
 export default function MovieReviews({ movie }) {
-    
+  /* Legacy code  
   const { data, error, isPending, isError } = useQuery({
     queryKey: ['reviews', { id: movie.id }],
     queryFn: getMovieReviews,
   });
+  */
+ 
+ // Backend service for reviews
+ const { data: reviews = [], error, isPending, isError } 
+ = useQuery({
+  queryKey: ["reviews", { movieId: movie.id }],
+  queryFn: getReviewsByMovie,
+ });
   
   if (isPending) {
     return <Spinner />;
@@ -28,7 +37,7 @@ export default function MovieReviews({ movie }) {
     return <h1>{error.message}</h1>;
   }
   
-  const reviews = data.results;
+  //Legacy code const reviews = data.results;
 
 
   return (
