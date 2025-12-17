@@ -7,6 +7,7 @@ import usersRouter from './api/users';
 import moviesRouter from './api/movies';
 import authenticate from './authenticate';
 import favouritesRouter from "./api/favourites/index";
+import reviewRouter from "./api/reviews/index";
 
 
 
@@ -40,6 +41,9 @@ app.use('/api/movies',moviesRouter);
 
 //Favourites Router
 app.use("/api/favourites", authenticate, favouritesRouter);
+
+//Reviews Router
+app.use("api/reviews", reviewRouter);
 
 app.listen(port, () => {
   console.info(`Server running at ${port}`);
