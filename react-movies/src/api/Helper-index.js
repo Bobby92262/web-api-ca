@@ -28,3 +28,29 @@ export const deleteFavouriteMovie = async (movieId) => {
     });
     return response.json();
 };
+
+export const postReview = async (movieId, content, rating) => {
+  const response = await fetch("http://localhost:8080/api/reviews", {
+    method: 'post',
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("token")
+    },
+    body: JSON.stringify({ movieId, content, rating })
+  });
+  return response.json();
+};
+
+export const getReviewsByMovie = async ({ queryKey }) => {
+    const [, {movieId }] = queryKey;
+    const response = await fetch(`http://localhost:8080/api/reviews/movie/${movieId}`
+    );
+    return response.json();
+};
+
+export const getReviewsByUser = async ({ queryKey }) => {
+    const [, { username }] = queryKey;
+    const response = await fetch(`http://localhost:8080/api/reviews/user/${username}`
+    );
+    return response.json();
+};
