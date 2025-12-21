@@ -19,6 +19,7 @@ import LoginPage from "./pages/loginPage";
 import SignupPage from "./pages/signupPage";
 import StartPage from "./pages/startPage";
 import ProfilePage from "./pages/profilePage";
+import MyReviewsPage from "./pages/userReviewsPage";
 import AuthContextProvider from "./contexts/authContext";
 import ProtectedRoutes from "./protectedRoutes";
 import { ThemeProvider } from "@mui/material/styles";
@@ -67,6 +68,7 @@ const App = () => {
                   <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
                   <Route path="/movies/watched" element={<WatchedMoviesPage/>} />
                   <Route path="/profile" element={< ProfilePage />} />
+                  <Route path="/profile/reviews" element={< MyReviewsPage />} />
                 </Route>
 
                 
